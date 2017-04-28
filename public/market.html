@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-resource.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="bulma/css/bulma.css">
+<html>
+<head>
+<title>Market Shop</title>
+<style>
+
+.dropdown {
+		position: relative;
+		display: inline-block;
+}
+
+.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		min-width: 160px;
+		overflow: auto;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		z-index: 1;
+}
+
+.dropdown-content a {
+		color: black;
+		padding: 12px 16px;
+		text-decoration: none;
+		display: block;
+}
+
+.dropdown a:hover {background-color: #f1f1f1}
+
+.show {display:block;}
+
+.button1:hover {
+		background-color: #4CAF50;
+		color: white;
+}
+
+.button2 {
+		background-color: white; 
+		color: black; 
+		border: 2px solid #008CBA;
+}
+
+.button2:hover {
+		background-color: #008CBA;
+		color: white;
+}
+
+.button3 {
+		background-color: white; 
+		color: black; 
+		border: 2px solid #f44336;
+}
+
+.button3:hover {
+		background-color: #f44336;
+		color: white;
+}
+
+.button4 {
+		background-color: white;
+		color: black;
+		border: 2px solid #e7e7e7;
+}
+
+.button4:hover {background-color: #e7e7e7;}
+
+.button5 {
+		background-color: white;
+		color: black;
+		border: 2px solid #555555;
+}
+
+.button5:hover {
+		background-color: #555555;
+		color: white;
+}
+
+/*div {
+		background-color: lightgrey;
+		width: 1100px;
+		border: 25px solid green;
+		padding: 25px;
+		margin: 25px;
+}*/
+.tabcontent {
+		display: none;
+		padding: 6px 12px;
+		border: 1px solid #ccc;
+		border-top: none;
+}
+
+</style>
+
+
+</head>
+<body><center>
+<div class= "container"ng-app="Market" ng-controller="Market_C">
+		<section class="hero is-primary">
+		  <div class="hero-body">
+		    <div class="container">
+		      <h1 class="title">
+		        Market Shop
+		      </h1>
+
+		    </div>
+		  </div>
+		</section>
+		<div class="dropdown">
+				<button onclick="myFunction()" class="button button1">รายการสินค้า</button>
+				<div id="myDropdown" class="dropdown-content">
+						<a  onclick="openCity(event, 'Drink')">เครื่องดื่ม</a>
+						<a  onclick="openCity(event, 'Equip')">อุปกรณ์</a>
+						<a  onclick="openCity(event, 'Toy')">ของเล่น</a>
+				</div>
+		</div>
+
+		<button class="tablinks button is-success is-outlined" onclick="openCity(event, 'Add')">เพิ่มรายการสินค้า</button>
+		<button class="tablink button is-danger is-outlined"  onclick="openCity(event, 'Check')">ตรวจรายการสินค้าที่ซื้อ</button>
+
+		<div id="Equip" class="tabcontent">
+			<h3  class="tag is-info title is-5">Equip</h3>
+			<div class="box">
+			<article class="media ">			
+			<table class="table">
+				<thead>
+					<tr>
+						<th><abbr title="Position" >หมายเลขสินค้า</abbr></th>
+						<th>รายการสินค้า</th>
+						<th><abbr title="Played">ราคา</abbr></th>
+						<th><abbr title="bth">จำนวน</abbr></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr  ng-repeat="item in items track by $index" ng-if="!isEmpty(item) && item.type=='equip'">
+						<td>{{item.id}}</td>
+						<td>{{item.name}}</td>
+						<td>{{item.bth}}</td>
+					<div class="field">
+					  	<p class="control">
+						<td><input type="text" class="input" id="name" ng-model="item.number" placeholder="จำนวน"></td>
+					  	</p>
+					</div>
+						<td><button class="button is-danger is-outlined" type="submit" ng-click="delete(item.id)"> Delete </button></td>
+						<td><button class="button is-success is-outlined" type="submit" ng-click=tmp(item)> Add </button></td>
+					</tr>					
+				</tbody>
+			</table>
+			</article>
+			</div>			
+		</div>
+
+		<div id="Toy" class="tabcontent">
+			<h3 class="tag is-info title is-5">Toy</h3>
+			<div class="box">
+			<article class="media ">
+			<table class="table">
+				<thead>
+					<tr>
+						<th><abbr title="Position">หมายเลขสินค้า</abbr></th>
+						<th>รายการสินค้า</th>
+						<th><abbr title="Played">ราคา</abbr></th>
+						<th><abbr title="bth">จำนวน</abbr></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr  ng-repeat="item in items track by $index" ng-if="!isEmpty(item) && item.type=='toy'">
+						<td>{{item.id}}</td>
+						<td>{{item.name}}</td>
+						<td>{{item.bth}}</td>
+					<div class="field">
+					  	<p class="control">
+						<td><input type="text" class="input" id="name" ng-model="item.number" placeholder="จำนวน"></td>
+					  	</p>
+					</div>
+						<td><button class="button is-danger is-outlined" type="submit" ng-click="delete(item.id)"> Delete </button></td>
+						<td><button class="button is-success is-outlined" type="submit" ng-click=tmp(item)> Add </button></td>
+					</tr>
+
+				</tbody>
+			</table>
+			</article>
+			</div>
+		</div>
+
+		<div id="Drink" class="tabcontent">
+			<h3 class="tag is-info title is-5">Drink</h3>
+			<div class="box">
+			<article class="media ">
+			<table class="table">
+				<thead>
+					<tr>
+						<th><abbr title="Position">หมายเลขสินค้า</abbr></th>
+						<th>รายการสินค้า</th>
+						<th><abbr title="Played">ราคา</abbr></th>
+						<th><abbr title="bth">จำนวน</abbr></th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr  ng-repeat="item in items track by $index" ng-if="!isEmpty(item) && item.type=='drink'">
+						<td>{{item.id}}</td>
+						<td>{{item.name}}</td>
+						<td>{{item.bth}}</td>
+					<div class="field">
+					  	<p class="control">
+						<td><input type="text" class="input" id="name" ng-model="item.number" placeholder="จำนวน"></td>
+					  	</p>
+					</div>
+						<td><button class="button is-danger is-outlined" type="submit" ng-click="delete(item.id)"> Delete </button></td>
+						<td><button class="button is-success is-outlined" type="submit" ng-click=tmp(item)> Add </button></td>
+					</tr>	
+				</tbody>
+			</table>
+			</article>
+			</div>
+		</div>
+
+		<div id="Add" class="tabcontent">
+				<h2 class="tag is-info title is-5">เพิ่มรายการของสินค้า</h2>
+				<div class="columns is-mobile">
+			  	<div class="column is-half is-offset-one-quarter">
+			  	<div class="notification is-success" ng-if="success">
+				  Success
+				 <button class="delete" onclick="((this).parentNode.remove())"></button>
+				</div>
+			  	<div class="field">
+					  <p class="control">
+						 <input type="text" class="input" id="name" ng-model="addItem.name" placeholder="ชื่อสินค้า">
+					  </p>
+					</div>
+					<div class="field">
+					  <p class="control">
+							<input type="text" class="input" id="name" ng-model="addItem.bth" placeholder="ราคา">
+					  </p>
+					</div>
+					<div class="field">
+					  <p class="control">
+							<input type="text" class="input" id="name" ng-model="addItem.type" placeholder="ชนิด">
+					  </p>
+					</div>
+					<button class="button is-info is-outlined" ng-click="add()">เพิ่ม</button>
+			  </div>
+			</div>
+		</div>
+
+
+	<div id="Check" class="tabcontent">
+		<div class=" is-offset-one-quarter">
+
+			<h3 class="tag is-info title is-5">Check</h3>
+			<div class="box">
+  			<article class="media ">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>รายการสินค้า</th>
+						<th><abbr title="Played">ราคา</abbr></th>
+						<th><abbr title="bth">จำนวน</abbr></th>
+
+					</tr>
+					</thead>
+
+				<tbody>
+					<tr  ng-repeat="cart in carts track by $index" ng-if="!isEmpty(cart) ">
+						<td>{{cart.name}}</td>
+						<td>{{cart.bth}}</td>
+						<td>{{cart.number}}</td>
+						<td><button class="button is-danger is-outlined" type="submit" ng-click="delete_shop(cart.id)"> Delete </button></td>			
+				</tbody>
+					</tr>
+					<tfoot>
+						<tr>
+						<th></th>
+						<th><button class="button is-info is-outlined" ng-click="sum()">รวม</button></th>
+						<th>Total : {{sums[0].message}} Bath</th>
+						
+						</tr>
+					</tfoot>				
+			</table>
+			</article>
+			</div>
+		</div>	
+	</div>
+</div>
+<script type="text/javascript">
+				var app = angular.module("Market",['ngResource'])
+				app.controller("Market_C", function($scope, $resource){
+						var Item = $resource('/api/Market/:item_id' ,{item_id : '@id'},
+								{ 
+										delete: {method:'delete' } 
+								})
+						var Cart = $resource('/api/Shopping/:shop_id' ,{shop_id : '@id'},
+								{ 
+										delete: {method:'delete' } 
+								})
+						var Cart_S = $resource('/api/SumIeam' ,{sum_id : '@id'},
+								{ 
+										delete: {method:'delete' } 
+								})
+						$scope.delItem = {}
+						$scope.result = {}
+						$scope.sums = 0
+						$scope.items = Item.query()
+						$scope.carts = Cart.query()
+						$scope.tmp = function(item) {
+								Cart.save({name: item.name,
+												bth: item.bth,
+												number : item.number
+										  })
+								$scope.carts = Cart.query()
+						}			
+
+						$scope.add =  function() {
+								Item.save({name: $scope.addItem.name, 
+												 bth: $scope.addItem.bth,
+												 type: $scope.addItem.type},function(res){
+												 	if(res.message == 'success') $scope.success = 1;
+												 })
+								$scope.success = 0;
+								$scope.items = Item.query()
+						}
+						$scope.sum = function (){
+								$scope.sums = Cart_S.query()
+	
+						}
+						$scope.delete = function(id) {
+								Item.delete( {item_id: id},{id : $scope.delItem.id })
+								$scope.result = 'Delete  ' + id
+								$scope.items = Item.query()
+						}
+						$scope.delete_shop = function(id) {
+							console.log(id);
+								Cart.delete( {shop_id: id},{id : $scope.delItem.id })
+								$scope.result = 'Delete  ' + id
+								$scope.carts = Cart.query()
+						}						
+						$scope.isEmpty = function(item) {
+								return Object.keys(item).length == 0
+						}
+						$scope.select = function(id, item) {
+								return id == item.id
+						}
+					
+				})
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+function myFunction() {
+		document.getElementById("myDropdown").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+	if (!event.target.matches('.button1')) {
+
+		var dropdowns = document.getElementsByClassName("dropdown-content");
+		var i;
+		for (i = 0; i < dropdowns.length; i++) {
+			var openDropdown = dropdowns[i];
+			if (openDropdown.classList.contains('show')) {
+				openDropdown.classList.remove('show');
+			}
+		}
+	}
+}
+</script>
+
+<script>
+function openCity(evt, cityName) {
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName("tabcontent");
+		for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+		}
+		tablinks = document.getElementsByClassName("tablinks");
+		for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" active", "");
+		}
+		document.getElementById(cityName).style.display = "block";
+		evt.currentTarget.className += " active";
+}
+</script>
+
+
+
+</body>
+</html>
