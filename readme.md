@@ -10,4 +10,4 @@ assignment  Client -> Market Shop
 นายอนุพงษ์ สรรค์พฤกษ์สิน 5635512147
 
 
-ลิงค์ Server http://student.coe.phuket.psu.ac.th:50147/market.html
+ลิงค์ Assignment http://student.coe.phuket.psu.ac.th:50147/market.html
