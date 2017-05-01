@@ -8,3 +8,6 @@ assignment  Client -> Market Shop
 นางสาว พิมพิศา ผาดศรี 5635512128
 
 นายอนุพงษ์ สรรค์พฤกษ์สิน 5635512147
+
+
+ลิงค์ Server http://student.coe.phuket.psu.ac.th:50147/market.html
